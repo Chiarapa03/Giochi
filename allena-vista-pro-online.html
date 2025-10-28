@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    <title>Allena la Vista Pro - Riabilitazione Visuopercettiva</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f9fafb;
+            --shadow: 0 20px 50px rgba(99, 102, 241, 0.2);
+        }
+        
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Particelle animate di sfondo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Header Animato */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 80px;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+            display: inline-block;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+        
+        /* Cards con glassmorphism */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.3);
+        }
+        
+        /* Grid dei giochi */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .game-card {
+            background: white;
+            border-radius: 25px;
+            padding: 35px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .game-card:hover::before {
+            opacity: 0.1;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+        
+        .game-card-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .game-icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+            display: block;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .game-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+        
+        .game-description {
+            font-size: 15px;
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .game-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+        
+        /* Selettore livello elegante */
+        .level-selector {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .level-selector label {
+            color: white;
+            font-size: 22px;
+            font-weight: 600;
+            margin-right: 20px;
+            display: inline-block;
+        }
+        
+        .level-buttons {
+            display: inline-flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .level-btn {
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .level-btn:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .level-btn.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Area di gioco */
+        .game-area {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .game-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .game-title-large {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .game-instructions {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            color: var(--dark);
+            font-size: 16px;
+            margin-bottom: 25px;
+            border: 2px solid #bae6fd;
+        }
+        
+        /* Grid di gioco professionale */
+        .game-grid {
+            display: grid;
+            gap: 15px;
+            margin: 0 auto;
+            max-width: fit-content;
+        }
+        
+        .game-cell {
+            background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+            border-radius: 15px;
+            border: 3px solid #e5e7eb;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-cell::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+        
+        .game-cell:hover::before {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .game-cell:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+        
+        .game-cell:active {
+            transform: scale(0.95);
+        }
+        
+        .game-cell.correct {
+            animation: correctPulse 0.5s;
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-color: var(--success);
+        }
+        
+        .game-cell.wrong {
+            animation: wrongShake 0.5s;
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            border-color: var(--danger);
+        }
+        
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        /* Forme con gradienti */
+        .shape {
+            transition: all 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .shape-circle {
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .shape-square {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .shape-triangle {
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+        
+        .shape-diamond {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .shape-star {
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+        
+        /* Canvas per giochi avanzati */
+        #gameCanvas {
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            cursor: crosshair;
+            max-width: 100%;
+            background: #f9fafb;
+        }
+        
+        /* Bottoni moderni */
+        .btn {
+            padding: 16px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .back-button {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: white;
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+            margin-bottom: 20px;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+        }
+        
+        /* Schermata risultati premium */
+        .results-container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        
+        .results-card {
+            background: white;
+            border-radius: 40px;
+            padding: 60px 40px;
+            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .results-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: rotateGradient 10s linear infinite;
+        }
+        
+        @keyframes rotateGradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .results-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .results-emoji {
+            font-size: 100px;
+            margin-bottom: 25px;
+            display: inline-block;
+            animation: celebrate 1s ease-in-out infinite;
+        }
+        
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(-10deg); }
+            75% { transform: scale(1.1) rotate(10deg); }
+        }
+        
+        .results-title {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+        
+        .results-score {
+            font-size: 72px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-shadow: 0 5px 15px rgba(99, 102, 241, 0.2);
+        }
+        
+        .results-message {
+            font-size: 18px;
+            color: #6b7280;
+            margin-bottom: 40px;
+            line-height: 1.8;
+        }
+        
+        .results-stars {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-size: 40px;
+        }
+        
+        .star {
+            animation: starPop 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .star:nth-child(1) { animation-delay: 0.1s; }
+        .star:nth-child(2) { animation-delay: 0.2s; }
+        .star:nth-child(3) { animation-delay: 0.3s; }
+        .star:nth-child(4) { animation-delay: 0.4s; }
+        .star:nth-child(5) { animation-delay: 0.5s; }
+        
+        @keyframes starPop {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; }
+        }
+        
+        /* Info box */
+        .info-box {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 40px;
+            color: white;
+        }
+        
+        .info-box h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-box p {
+            font-size: 16px;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+        
+        /* Progress bar */
+        .progress-container {
+            background: #e5e7eb;
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+        
+        /* Statistiche salvate */
+        .stats-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid #bae6fd;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-item-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stat-item-label {
+            font-size: 13px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            .logo { font-size: 60px; }
+            .game-card { padding: 25px; }
+            .game-icon { font-size: 50px; }
+            .game-title { font-size: 20px; }
+            .level-selector { padding: 20px; }
+            .level-selector label { display: block; margin-bottom: 15px; }
+            .game-cell { width: 70px !important; height: 70px !important; }
+            .results-score { font-size: 56px; }
+            .results-title { font-size: 32px; }
+            .btn { padding: 14px 30px; font-size: 16px; }
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Particelle animate -->
+    <div class="particles" id="particles"></div>
+    
+    <div id="app"></div>
+
+    <script>
+        // Genera particelle di sfondo
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                particles.appendChild(particle);
+            }
+        }
+        
+        createParticles();
+        
+        // Applicazione principale
+        const app = {
+            currentScreen: 'menu',
+            currentGame: null,
+            level: 0,
+            score: 0,
+            attempts: 0,
+            maxAttempts: 6,
+            gameData: null,
+            stats: JSON.parse(localStorage.getItem('visualGameStats')) || {
+                totalGames: 0,
+                totalScore: 0,
+                bestScore: 0,
+                gamesPlayed: {}
+            },
+            
+            games: [
+                {
+                    id: 'discriminazione',
+                    name: 'Trova il Diverso',
+                    icon: '🔍',
+                    description: 'Trova l\'elemento che si distingue dagli altri',
+                    badge: 'Discriminazione Visiva',
+                    type: 'grid'
+                },
+                {
+                    id: 'memoria',
+                    name: 'Ricorda le Posizioni',
+                    icon: '🧠',
+                    description: 'Memorizza e riproduci le posizioni degli elementi',
+                    badge: 'Memoria Visiva',
+                    type: 'memory'
+                },
+                {
+                    id: 'figura-sfondo',
+                    name: 'Trova i Cerchi',
+                    icon: '🎯',
+                    description: 'Trova gli oggetti nascosti nello sfondo complesso',
+                    badge: 'Percezione Figura-Sfondo',
+                    type: 'canvas'
+                },
+                {
+                    id: 'rotazione',
+                    name: 'Forma Ruotata',
+                    icon: '🔄',
+                    description: 'Riconosci la stessa forma ruotata nello spazio',
+                    badge: 'Rotazione Mentale',
+                    type: 'rotation'
+                },
+                {
+                    id: 'completamento',
+                    name: 'Completa la Forma',
+                    icon: '🧩',
+                    description: 'Identifica i pezzi mancanti della forma',
+                    badge: 'Completamento Visivo',
+                    type: 'completion'
+                }
+            ],
+            
+            colors: ['#EF4444', '#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899', '#14B8A6'],
+            shapes: ['circle', 'square', 'triangle', 'diamond', 'star'],
+            
+            init() {
+                this.render();
+            },
+            
+            setScreen(screen) {
+                this.currentScreen = screen;
+                this.render();
+            },
+            
+            setLevel(level) {
+                this.level = level;
+                this.render();
+            },
+            
+            startGame(gameId) {
+                this.currentGame = this.games.find(g => g.id === gameId);
+                this.score = 0;
+                this.attempts = 0;
+                this.generateGameData();
+                this.setScreen('game');
+            },
+            
+            generateGameData() {
+                const game = this.currentGame;
+                
+                if (game.type === 'grid') {
+                    this.generateDiscriminazioneGame();
+                } else if (game.type === 'memory') {
+                    this.generateMemoriaGame();
+                } else if (game.type === 'canvas') {
+                    setTimeout(() => this.generateFiguraSfondoGame(), 100);
+                } else if (game.type === 'rotation') {
+                    this.generateRotazioneGame();
+                } else if (game.type === 'completion') {
+                    this.generateCompletamentoGame();
+                }
+            },
+            
+            generateDiscriminazioneGame() {
+                const gridSize = Math.min(3 + this.level, 6);
+                const totalCells = gridSize * gridSize;
+                
+                const mainShape = this.shapes[Math.floor(Math.random() * this.shapes.length)];
+                const mainColor = this.colors[Math.floor(Math.random() * this.colors.length)];
+                
+                let differentShape = this.shapes[Math.floor(Math.random() * this.shapes.length)];
+                while (differentShape === mainShape) {
+                    differentShape = this.shapes[Math.floor(Math.random() * this.shapes.length)];
+                }
+                
+                const differentIndex = Math.floor(Math.random() * totalCells);
+                
+                const cells = [];
+                for (let i = 0; i < totalCells; i++) {
+                    cells.push({
+                        shape: i === differentIndex ? differentShape : mainShape,
+                        color: mainColor,
+                        isDifferent: i === differentIndex
+                    });
+                }
+                
+                this.gameData = { gridSize, cells, differentIndex };
+            },
+            
+            generateMemoriaGame() {
+                const gridSize = 4;
+                const itemsToRemember = Math.min(3 + this.level, 8);
+                
+                const positions = [];
+                while (positions.length < itemsToRemember) {
+                    const pos = Math.floor(Math.random() * (gridSize * gridSize));
+                    if (!positions.includes(pos)) {
+                        positions.push(pos);
+                    }
+                }
+                
+                this.gameData = {
+                    gridSize,
+                    positions,
+                    phase: 'memorize',
+                    userSelections: [],
+                    itemsToRemember
+                };
+                
+                setTimeout(() => {
+                    this.gameData.phase = 'recall';
+                    this.render();
+                }, 2000 + this.level * 500);
+            },
+            
+            generateFiguraSfondoGame() {
+                const canvas = document.getElementById('gameCanvas');
+                if (!canvas) return;
+                
+                const ctx = canvas.getContext('2d');
+                canvas.width = 900;
+                canvas.height = 600;
+                
+                // Sfondo
+                ctx.fillStyle = '#f9fafb';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Pattern di disturbo
+                for (let i = 0; i < 80; i++) {
+                    ctx.strokeStyle = `rgba(150, 150, 150, ${Math.random() * 0.2})`;
+                    ctx.lineWidth = Math.random() * 2;
+                    ctx.beginPath();
+                    ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                    ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                    ctx.stroke();
+                }
+                
+                // Target circles
+                const numTargets = Math.min(4 + this.level, 8);
+                const targets = [];
+                
+                for (let i = 0; i < numTargets; i++) {
+                    const x = 60 + Math.random() * (canvas.width - 120);
+                    const y = 60 + Math.random() * (canvas.height - 120);
+                    const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+                    const radius = 25;
+                    
+                    // Ombra
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowOffsetX = 3;
+                    ctx.shadowOffsetY = 3;
+                    
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.arc(x, y, radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Reset shadow
+                    ctx.shadowColor = 'transparent';
+                    ctx.shadowBlur = 0;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 0;
+                    
+                    targets.push({ x, y, color, radius, found: false });
+                }
+                
+                // Cerchi di disturbo
+                for (let i = 0; i < 40; i++) {
+                    ctx.fillStyle = `rgba(180, 180, 180, ${Math.random() * 0.3})`;
+                    ctx.beginPath();
+                    ctx.arc(
+                        Math.random() * canvas.width,
+                        Math.random() * canvas.height,
+                        8 + Math.random() * 15,
+                        0,
+                        Math.PI * 2
+                    );
+                    ctx.fill();
+                }
+                
+                this.gameData = { targets, canvas, ctx };
+            },
+            
+            generateRotazioneGame() {
+                // Genera forma irregolare
+                const points = [];
+                const numPoints = 6;
+                const centerX = 50;
+                const centerY = 50;
+                
+                for (let i = 0; i < numPoints; i++) {
+                    const angle = (i / numPoints) * Math.PI * 2;
+                    const radius = 20 + Math.random() * 15;
+                    points.push({
+                        x: centerX + Math.cos(angle) * radius,
+                        y: centerY + Math.sin(angle) * radius
+                    });
+                }
+                
+                const targetRotation = Math.floor(Math.random() * 360);
+                const correctOption = { points, rotation: targetRotation, isCorrect: true };
+                
+                const options = [correctOption];
+                
+                // Genera 3 forme sbagliate
+                for (let i = 0; i < 3; i++) {
+                    const wrongPoints = points.map(p => ({
+                        x: p.x + (Math.random() - 0.5) * 25,
+                        y: p.y + (Math.random() - 0.5) * 25
+                    }));
+                    options.push({
+                        points: wrongPoints,
+                        rotation: Math.floor(Math.random() * 360),
+                        isCorrect: false
+                    });
+                }
+                
+                // Mescola
+                options.sort(() => Math.random() - 0.5);
+                
+                this.gameData = {
+                    targetShape: { points, rotation: 0 },
+                    options
+                };
+            },
+            
+            generateCompletamentoGame() {
+                const gridSize = 4;
+                const totalPieces = gridSize * 2;
+                const missingCount = Math.min(2 + this.level, 4);
+                
+                const missing = [];
+                while (missing.length < missingCount) {
+                    const piece = Math.floor(Math.random() * totalPieces);
+                    if (!missing.includes(piece)) {
+                        missing.push(piece);
+                    }
+                }
+                
+                this.gameData = {
+                    gridSize,
+                    totalPieces,
+                    missing,
+                    userSelections: [],
+                    missingCount
+                };
+            },
+            
+            handleGameAction(data) {
+                const game = this.currentGame;
+                
+                if (game.type === 'grid') {
+                    this.handleDiscriminazioneClick(data.index);
+                } else if (game.type === 'memory') {
+                    this.handleMemoriaClick(data.index);
+                } else if (game.type === 'canvas') {
+                    this.handleFiguraSfondoClick(data.x, data.y);
+                } else if (game.type === 'rotation') {
+                    this.handleRotazioneClick(data.index);
+                } else if (game.type === 'completion') {
+                    this.handleCompletamentoClick(data.index);
+                }
+            },
+            
+            handleDiscriminazioneClick(index) {
+                const cell = this.gameData.cells[index];
+                const cellEl = document.querySelectorAll('.game-cell')[index];
+                
+                if (cell.isDifferent) {
+                    cellEl.classList.add('correct');
+                    this.score += 10;
+                    this.attempts++;
+                    
+                    setTimeout(() => {
+                        if (this.attempts >= this.maxAttempts) {
+                            this.endGame();
+                        } else {
+                            this.generateDiscriminazioneGame();
+                            this.render();
+                        }
+                    }, 600);
+                } else {
+                    cellEl.classList.add('wrong');
+                    setTimeout(() => cellEl.classList.remove('wrong'), 500);
+                }
+                
+                this.render();
+            },
+            
+            handleMemoriaClick(index) {
+                if (this.gameData.phase !== 'recall') return;
+                
+                const userSel = this.gameData.userSelections;
+                const indexPos = userSel.indexOf(index);
+                
+                if (indexPos > -1) {
+                    userSel.splice(indexPos, 1);
+                } else if (userSel.length < this.gameData.itemsToRemember) {
+                    userSel.push(index);
+                }
+                
+                if (userSel.length === this.gameData.itemsToRemember) {
+                    const correct = userSel.every(s => this.gameData.positions.includes(s)) &&
+                                   this.gameData.positions.every(p => userSel.includes(p));
+                    
+                    if (correct) {
+                        this.score += 15;
+                        this.attempts++;
+                        
+                        setTimeout(() => {
+                            if (this.attempts >= 5) {
+                                this.endGame();
+                            } else {
+                                this.generateMemoriaGame();
+                                this.render();
+                            }
+                        }, 1000);
+                    } else {
+                        this.gameData.phase = 'show-answer';
+                        this.render();
+                        
+                        setTimeout(() => {
+                            this.attempts++;
+                            if (this.attempts >= 5) {
+                                this.endGame();
+                            } else {
+                                this.generateMemoriaGame();
+                                this.render();
+                            }
+                        }, 2000);
+                    }
+                }
+                
+                this.render();
+            },
+            
+            handleFiguraSfondoClick(x, y) {
+                const canvas = this.gameData.canvas;
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const clickX = (x - rect.left) * scaleX;
+                const clickY = (y - rect.top) * scaleY;
+                
+                this.gameData.targets.forEach(target => {
+                    if (target.found) return;
+                    
+                    const distance = Math.sqrt(Math.pow(clickX - target.x, 2) + Math.pow(clickY - target.y, 2));
+                    if (distance < target.radius) {
+                        target.found = true;
+                        this.score += 10;
+                        
+                        // Evidenzia
+                        const ctx = this.gameData.ctx;
+                        ctx.strokeStyle = '#10b981';
+                        ctx.lineWidth = 5;
+                        ctx.beginPath();
+                        ctx.arc(target.x, target.y, target.radius + 8, 0, Math.PI * 2);
+                        ctx.stroke();
+                        
+                        const allFound = this.gameData.targets.every(t => t.found);
+                        if (allFound) {
+                            setTimeout(() => this.endGame(), 1000);
+                        }
+                    }
+                });
+                
+                this.render();
+            },
+            
+            handleRotazioneClick(index) {
+                const option = this.gameData.options[index];
+                
+                if (option.isCorrect) {
+                    this.score += 15;
+                    this.attempts++;
+                    
+                    setTimeout(() => {
+                        if (this.attempts >= 5) {
+                            this.endGame();
+                        } else {
+                            this.generateRotazioneGame();
+                            this.render();
+                        }
+                    }, 600);
+                }
+                
+                this.render();
+            },
+            
+            handleCompletamentoClick(index) {
+                const userSel = this.gameData.userSelections;
+                const indexPos = userSel.indexOf(index);
+                
+                if (indexPos > -1) {
+                    userSel.splice(indexPos, 1);
+                } else {
+                    userSel.push(index);
+                }
+                
+                if (userSel.length === this.gameData.missingCount) {
+                    const correct = userSel.every(s => this.gameData.missing.includes(s)) &&
+                                   this.gameData.missing.every(m => userSel.includes(m));
+                    
+                    if (correct) {
+                        this.score += 20;
+                        this.attempts++;
+                        
+                        setTimeout(() => {
+                            if (this.attempts >= 4) {
+                                this.endGame();
+                            } else {
+                                this.generateCompletamentoGame();
+                                this.render();
+                            }
+                        }, 1000);
+                    } else {
+                        setTimeout(() => {
+                            this.gameData.userSelections = [];
+                            this.render();
+                        }, 500);
+                    }
+                }
+                
+                this.render();
+            },
+            
+            endGame() {
+                // Aggiorna statistiche
+                this.stats.totalGames++;
+                this.stats.totalScore += this.score;
+                this.stats.bestScore = Math.max(this.stats.bestScore, this.score);
+                
+                if (!this.stats.gamesPlayed[this.currentGame.id]) {
+                    this.stats.gamesPlayed[this.currentGame.id] = 0;
+                }
+                this.stats.gamesPlayed[this.currentGame.id]++;
+                
+                localStorage.setItem('visualGameStats', JSON.stringify(this.stats));
+                
+                this.setScreen('results');
+            },
+            
+            renderShape(shape, color, size = 60) {
+                const style = `background: linear-gradient(135deg, ${color}, ${this.adjustColor(color, -20)});`;
+                
+                switch(shape) {
+                    case 'circle':
+                        return `<div class="shape shape-circle" style="width: ${size}px; height: ${size}px; ${style}"></div>`;
+                    case 'square':
+                        return `<div class="shape shape-square" style="width: ${size}px; height: ${size}px; ${style}"></div>`;
+                    case 'triangle':
+                        return `<div class="shape shape-triangle" style="width: 0; height: 0; border-left: ${size/2}px solid transparent; border-right: ${size/2}px solid transparent; border-bottom: ${size}px solid ${color};"></div>`;
+                    case 'diamond':
+                        return `<div class="shape shape-diamond" style="width: ${size}px; height: ${size}px; ${style} transform: rotate(45deg);"></div>`;
+                    case 'star':
+                        return `<div class="shape shape-star" style="width: ${size}px; height: ${size}px; ${style} clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);"></div>`;
+                    default:
+                        return '';
+                }
+            },
+            
+            adjustColor(color, percent) {
+                const num = parseInt(color.slice(1), 16);
+                const amt = Math.round(2.55 * percent);
+                const R = (num >> 16) + amt;
+                const G = (num >> 8 & 0x00FF) + amt;
+                const B = (num & 0x0000FF) + amt;
+                return '#' + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 +
+                    (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255))
+                    .toString(16).slice(1);
+            },
+            
+            renderPolygon(shape, size = 120) {
+                if (!shape) return '';
+                
+                const pathData = shape.points.map((p, i) =>
+                    `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
+                ).join(' ') + ' Z';
+                
+                return `
+                    <svg width="${size}" height="${size}" viewBox="0 0 100 100">
+                        <defs>
+                            <linearGradient id="shapeGrad${Date.now()}" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="${pathData}" 
+                              fill="url(#shapeGrad${Date.now()})" 
+                              transform="rotate(${shape.rotation}, 50, 50)"
+                              style="filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));" />
+                    </svg>
+                `;
+            },
+            
+            render() {
+                const appEl = document.getElementById('app');
+                
+                if (this.currentScreen === 'menu') {
+                    appEl.innerHTML = this.renderMenu();
+                    this.attachMenuListeners();
+                } else if (this.currentScreen === 'game') {
+                    appEl.innerHTML = this.renderGame();
+                    this.attachGameListeners();
+                } else if (this.currentScreen === 'results') {
+                    appEl.innerHTML = this.renderResults();
+                    this.attachResultsListeners();
+                }
+            },
+            
+            renderMenu() {
+                const levelLabels = ['Facile', 'Medio', 'Difficile', 'Esperto'];
+                const avgScore = this.stats.totalGames > 0 ? Math.round(this.stats.totalScore / this.stats.totalGames) : 0;
+                
+                return `
+                    <div class="container screen active">
+                        <div class="header">
+                            <div class="logo">👁️</div>
+                            <h1>Allena la Vista Pro</h1>
+                            <p class="subtitle">
+                                Riabilitazione visuopercettiva avanzata<br>
+                                5 giochi professionali per potenziare le tue abilità
+                            </p>
+                        </div>
+                        
+                        <div class="level-selector">
+                            <label>Seleziona Livello:</label>
+                            <div class="level-buttons">
+                                ${levelLabels.map((label, i) => `
+                                    <button class="level-btn ${this.level === i ? 'active' : ''}" data-level="${i}">
+                                        ${label}
+                                    </button>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        ${this.stats.totalGames > 0 ? `
+                            <div class="stats-box">
+                                <h3 style="text-align: center; color: var(--dark); margin-bottom: 20px; font-size: 22px;">
+                                    📊 Le Tue Statistiche
+                                </h3>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <div class="stat-item-value">${this.stats.totalGames}</div>
+                                        <div class="stat-item-label">Partite</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-item-value">${this.stats.bestScore}</div>
+                                        <div class="stat-item-label">Record</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-item-value">${avgScore}</div>
+                                        <div class="stat-item-label">Media</div>
+                                    </div>
+                                </div>
+                            </div>
+                        ` : ''}
+                        
+                        <div class="games-grid">
+                            ${this.games.map(game => `
+                                <div class="game-card" data-game="${game.id}">
+                                    <div class="game-card-content">
+                                        <span class="game-icon">${game.icon}</span>
+                                        <h3 class="game-title">${game.name}</h3>
+                                        <p class="game-description">${game.description}</p>
+                                        <span class="game-badge">${game.badge}</span>
+                                        ${this.stats.gamesPlayed[game.id] ? `
+                                            <div style="margin-top: 15px; font-size: 13px; color: #6b7280;">
+                                                🎮 Giocato ${this.stats.gamesPlayed[game.id]} volte
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="info-box">
+                            <h3>💡 Come Usare l'App</h3>
+                            <p>
+                                • Seleziona il livello di difficoltà in base alle tue capacità<br>
+                                • Scegli un gioco tra i 5 disponibili<br>
+                                • Completa le sessioni per migliorare le tue abilità visuopercettive<br>
+                                • Pratica regolarmente per ottenere i migliori risultati<br>
+                                • Aumenta gradualmente la difficoltà man mano che migliori
+                            </p>
+                        </div>
+                    </div>
+                `;
+            },
+            
+            renderGame() {
+                const game = this.currentGame;
+                let gameContent = '';
+                
+                if (game.type === 'grid') {
+                    gameContent = this.renderDiscriminazioneGame();
+                } else if (game.type === 'memory') {
+                    gameContent = this.renderMemoriaGame();
+                } else if (game.type === 'canvas') {
+                    gameContent = this.renderFiguraSfondoGame();
+                } else if (game.type === 'rotation') {
+                    gameContent = this.renderRotazioneGame();
+                } else if (game.type === 'completion') {
+                    gameContent = this.renderCompletamentoGame();
+                }
+                
+                return `
+                    <div class="container screen active">
+                        <button class="btn back-button">← Torna al Menu</button>
+                        
+                        <div class="game-area">
+                            <div class="game-header">
+                                <div style="font-size: 50px; margin-bottom: 15px;">${game.icon}</div>
+                                <h2 class="game-title-large">${game.name}</h2>
+                                <div class="game-stats">
+                                    <div class="stat">
+                                        <div class="stat-value">${this.score}</div>
+                                        <div class="stat-label">Punteggio</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-value">${this.attempts + 1}/${game.type === 'memory' ? 5 : game.type === 'completion' ? 4 : game.type === 'canvas' ? 1 : this.maxAttempts}</div>
+                                        <div class="stat-label">Round</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            ${gameContent}
+                        </div>
+                    </div>
+                `;
+            },
+            
+            renderDiscriminazioneGame() {
+                const gridStyle = `grid-template-columns: repeat(${this.gameData.gridSize}, 1fr);`;
+                
+                return `
+                    <div class="game-instructions">
+                        <strong>🎯 Trova l'elemento diverso!</strong><br>
+                        Tocca la forma che si distingue dalle altre
+                    </div>
+                    <div class="game-grid" style="${gridStyle}">
+                        ${this.gameData.cells.map((cell, i) => `
+                            <div class="game-cell" data-index="${i}" style="width: 100px; height: 100px;">
+                                ${this.renderShape(cell.shape, cell.color, 65)}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            },
+            
+            renderMemoriaGame() {
+                const gridStyle = `grid-template-columns: repeat(${this.gameData.gridSize}, 1fr);`;
+                const phase = this.gameData.phase;
+                
+                let instruction = '';
+                if (phase === 'memorize') {
+                    instruction = '🧠 Memorizza le posizioni verdi...';
+                } else if (phase === 'recall') {
+                    instruction = `🤔 Seleziona ${this.gameData.itemsToRemember} celle (${this.gameData.userSelections.length}/${this.gameData.itemsToRemember})`;
+                } else {
+                    instruction = '❌ Risposta errata! Guarda la soluzione corretta';
+                }
+                
+                return `
+                    <div class="game-instructions">
+                        <strong>${instruction}</strong>
+                    </div>
+                    <div class="game-grid" style="${gridStyle}">
+                        ${Array(this.gameData.gridSize * this.gameData.gridSize).fill(0).map((_, i) => {
+                            const isTarget = this.gameData.positions.includes(i);
+                            const isSelected = this.gameData.userSelections.includes(i);
+                            const showTarget = phase === 'memorize' || phase === 'show-answer';
+                            
+                            let bgColor = '#f9fafb';
+                            if (showTarget && isTarget) bgColor = 'linear-gradient(135deg, #d1fae5, #a7f3d0)';
+                            else if (isSelected) bgColor = 'linear-gradient(135deg, #dbeafe, #bfdbfe)';
+                            
+                            return `
+                                <div class="game-cell" data-index="${i}" 
+                                     style="width: 90px; height: 90px; background: ${bgColor};">
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            },
+            
+            renderFiguraSfondoGame() {
+                const found = this.gameData ? this.gameData.targets.filter(t => t.found).length : 0;
+                const total = this.gameData ? this.gameData.targets.length : 0;
+                
+                return `
+                    <div class="game-instructions">
+                        <strong>🎯 Trova i cerchi colorati nascosti!</strong><br>
+                        Trovati: ${found}/${total}
+                    </div>
+                    <div style="text-align: center;">
+                        <canvas id="gameCanvas" width="900" height="600"></canvas>
+                    </div>
+                `;
+            },
+            
+            renderRotazioneGame() {
+                return `
+                    <div class="game-instructions">
+                        <strong>🔄 Trova la stessa forma ruotata!</strong><br>
+                        Osserva la forma sopra e trova quale delle 4 opzioni sotto è la stessa forma ruotata
+                    </div>
+                    <div style="text-align: center; margin-bottom: 40px;">
+                        <div class="card" style="display: inline-block; padding: 30px;">
+                            <p style="font-size: 16px; font-weight: 600; color: var(--dark); margin-bottom: 15px;">
+                                Forma Originale:
+                            </p>
+                            ${this.renderPolygon(this.gameData.targetShape, 150)}
+                        </div>
+                    </div>
+                    <p style="text-align: center; font-size: 18px; font-weight: 600; color: var(--dark); margin-bottom: 25px;">
+                        Seleziona la forma corretta:
+                    </p>
+                    <div class="game-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 600px;">
+                        ${this.gameData.options.map((option, i) => `
+                            <div class="game-cell" data-index="${i}" 
+                                 style="width: 180px; height: 180px; padding: 20px;">
+                                ${this.renderPolygon(option, 140)}
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            },
+            
+            renderCompletamentoGame() {
+                return `
+                    <div class="game-instructions">
+                        <strong>🧩 Completa la forma!</strong><br>
+                        Seleziona i ${this.gameData.missingCount} pezzi mancanti dalla forma
+                    </div>
+                    <div style="text-align: center; margin-bottom: 40px;">
+                        <div class="card" style="display: inline-block; padding: 25px;">
+                            <p style="font-size: 16px; font-weight: 600; color: var(--dark); margin-bottom: 15px;">
+                                Forma da completare:
+                            </p>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;">
+                                ${Array(this.gameData.totalPieces).fill(0).map((_, i) => {
+                                    const isMissing = this.gameData.missing.includes(i);
+                                    const isSelected = this.gameData.userSelections.includes(i);
+                                    
+                                    let bgColor = 'linear-gradient(135deg, #6366f1, #8b5cf6)';
+                                    if (isMissing) {
+                                        bgColor = isSelected ? 'linear-gradient(135deg, #fcd34d, #fbbf24)' : 'linear-gradient(135deg, #fee2e2, #fecaca)';
+                                    }
+                                    
+                                    return `
+                                        <div style="width: 70px; height: 70px; background: ${bgColor}; 
+                                                    border-radius: 10px; opacity: ${isMissing ? 0.6 : 1};
+                                                    box-shadow: 0 4px 8px rgba(0,0,0,0.15);"></div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <p style="text-align: center; font-size: 18px; font-weight: 600; color: var(--dark); margin-bottom: 20px;">
+                        Seleziona i pezzi (${this.gameData.userSelections.length}/${this.gameData.missingCount}):
+                    </p>
+                    <div class="game-grid" style="grid-template-columns: repeat(4, 1fr); max-width: 500px;">
+                        ${Array(this.gameData.totalPieces).fill(0).map((_, i) => {
+                            const isSelected = this.gameData.userSelections.includes(i);
+                            const bgColor = isSelected ? 'linear-gradient(135deg, #fcd34d, #fbbf24)' : 'white';
+                            
+                            return `
+                                <div class="game-cell" data-index="${i}"
+                                     style="width: 85px; height: 85px; background: ${bgColor};">
+                                    <span style="font-size: 28px; font-weight: 700; color: var(--dark);">
+                                        ${i + 1}
+                                    </span>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+            },
+            
+            renderResults() {
+                const maxScore = this.currentGame.type === 'memory' ? 75 : 
+                                this.currentGame.type === 'canvas' ? (Math.min(4 + this.level, 8) * 10) :
+                                this.currentGame.type === 'rotation' ? 75 :
+                                this.currentGame.type === 'completion' ? 80 : 60;
+                
+                const percentage = Math.round((this.score / maxScore) * 100);
+                
+                let emoji, title, stars;
+                if (percentage >= 90) {
+                    emoji = '🏆';
+                    title = 'Eccezionale!';
+                    stars = 5;
+                } else if (percentage >= 75) {
+                    emoji = '⭐';
+                    title = 'Eccellente!';
+                    stars = 4;
+                } else if (percentage >= 60) {
+                    emoji = '🎯';
+                    title = 'Ottimo Lavoro!';
+                    stars = 3;
+                } else if (percentage >= 40) {
+                    emoji = '👍';
+                    title = 'Buon Tentativo!';
+                    stars = 2;
+                } else {
+                    emoji = '💪';
+                    title = 'Continua così!';
+                    stars = 1;
+                }
+                
+                return `
+                    <div class="container screen active">
+                        <div class="results-container">
+                            <div class="results-card">
+                                <div class="results-content">
+                                    <div class="results-emoji">${emoji}</div>
+                                    <h2 class="results-title">${title}</h2>
+                                    <div class="results-score">${this.score}</div>
+                                    <div class="results-stars">
+                                        ${Array(5).fill(0).map((_, i) => 
+                                            `<span class="star">${i < stars ? '⭐' : '☆'}</span>`
+                                        ).join('')}
+                                    </div>
+                                    <p class="results-message">
+                                        Hai completato <strong>${this.currentGame.name}</strong>!<br>
+                                        Percentuale: <strong>${percentage}%</strong><br>
+                                        ${percentage >= 75 ? 'Prestazione eccellente! 🎉' : 
+                                          percentage >= 50 ? 'Ben fatto! Continua ad allenarti 💪' : 
+                                          'Continua a praticare per migliorare! 📈'}
+                                    </p>
+                                    
+                                    <div class="progress-container">
+                                        <div class="progress-bar" style="width: ${percentage}%"></div>
+                                    </div>
+                                    
+                                    <div style="margin-top: 40px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                                        <button class="btn btn-primary" id="playAgainBtn">
+                                            🔄 Gioca Ancora
+                                        </button>
+                                        <button class="btn btn-secondary" id="menuBtn">
+                                            🏠 Menu Principale
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+            
+            attachMenuListeners() {
+                document.querySelectorAll('.level-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.setLevel(parseInt(e.target.dataset.level));
+                    });
+                });
+                
+                document.querySelectorAll('.game-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        const gameId = e.currentTarget.dataset.game;
+                        this.startGame(gameId);
+                    });
+                });
+            },
+            
+            attachGameListeners() {
+                const backBtn = document.querySelector('.back-button');
+                if (backBtn) {
+                    backBtn.addEventListener('click', () => this.setScreen('menu'));
+                }
+                
+                const game = this.currentGame;
+                
+                if (game.type === 'grid' || game.type === 'rotation' || game.type === 'completion') {
+                    document.querySelectorAll('.game-cell').forEach(cell => {
+                        cell.addEventListener('click', (e) => {
+                            const index = parseInt(e.currentTarget.dataset.index);
+                            this.handleGameAction({ index });
+                        });
+                    });
+                } else if (game.type === 'memory') {
+                    document.querySelectorAll('.game-cell').forEach(cell => {
+                        cell.addEventListener('click', (e) => {
+                            const index = parseInt(e.currentTarget.dataset.index);
+                            this.handleGameAction({ index });
+                        });
+                    });
+                } else if (game.type === 'canvas') {
+                    const canvas = document.getElementById('gameCanvas');
+                    if (canvas) {
+                        canvas.addEventListener('click', (e) => {
+                            this.handleGameAction({ x: e.clientX, y: e.clientY });
+                        });
+                    }
+                }
+            },
+            
+            attachResultsListeners() {
+                const playAgainBtn = document.getElementById('playAgainBtn');
+                if (playAgainBtn) {
+                    playAgainBtn.addEventListener('click', () => {
+                        this.startGame(this.currentGame.id);
+                    });
+                }
+                
+                const menuBtn = document.getElementById('menuBtn');
+                if (menuBtn) {
+                    menuBtn.addEventListener('click', () => {
+                        this.setScreen('menu');
+                    });
+                }
+            }
+        };
+        
+        // Avvia l'app
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+        });
+    </script>
+</body>
+</html>
